@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Амина, я люблю тебя</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, #ffd1dc, #ffffff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+        .heart {
+            position: absolute;
+            font-size: 50px; /* Сделал сердечки больше */
+            color: pink; /* Розовый цвет для сердечек */
+            opacity: 0.8;
+            animation: float 4s infinite alternate ease-in-out;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-40px); }
+        }
+        .message-box {
+            position: absolute;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s;
+        }
+        .close-btn {
+            margin-left: 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .close-btn:hover {
+            transform: translateX(10px);
+        }
+        .cat-img {
+            position: absolute;
+            top: 5px;
+            width: 120px;
+        }
+        .cat-img.center {
+            top: 40px;
+            transform: translateY(-50%);
+        }
+        .side-cats {
+            position: absolute;
+            bottom: -130px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+        }
+        .side-cats img {
+            width: 100px;
+            margin-right: 10px;
+            border-radius: 10px;
+        }
+        .side-cats span {
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <img src="https://placekitten.com/120/120" class="cat-img" style="left: 10px;">
+    <img src="https://placekitten.com/120/120" class="cat-img center" style="right: 10px;">
+    <div id="message" class="message-box" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        АМИНА, Я ЛЮБЛЮ ТЕБЯ
+        <span id="close" class="close-btn">✖</span>
+    </div>
+    <div class="side-cats">
+        <img src="/mnt/data/image.png" alt="Мы">
+        <span>Мы</span>
+    </div>
+    <script>
+        const messages = [
+            "Не получится, я всегда буду любить тебя.",
+            "Ты все еще пытаешься? Не получится, жанм."
+        ];
+        let currentMessage = 0;
+        const messageBox = document.getElementById('message');
+        const closeButton = document.getElementById('close');
+        closeButton.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateX(50px)';
+            if (currentMessage < messages.length) {
+                messageBox.innerHTML = messages[currentMessage] + '<span id="close" class="close-btn">✖</span>';
+                currentMessage++;
+                document.getElementById('close').addEventListener('mouseenter', arguments.callee);
+            } else {
+                messageBox.innerHTML = 'АМИНА, Я ЛЮБЛЮ ТЕБЯ' + '<span id="close" class="close-btn">✖</span>';
+                currentMessage = 0;
+            }
+        });
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = Math.random() * 100 + 'vh';
+            heart.textContent = '❤';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+        setInterval(createHeart, 100);
+    </script>
+</body>
+</html>
